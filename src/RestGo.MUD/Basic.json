@@ -1,0 +1,24 @@
+{
+    "EQPositions": {
+        "Ligth": "照明用具",
+        "Head": "頭",
+        "Body": "身",
+        "LeggingsRight": "右腿",
+        "LeggingsLeft": "左腿",
+        "Gloves": "手",
+        "Arm": "手臂",
+        "Cape": "披風",
+        "Belt": "腰",
+        "Boots": "腳",
+        "EarRight": "右耳",
+        "EarLeft": "左耳",
+        "FingerRight": "右食指",
+        "FingerLeft": "左食指",
+        "Neck": "脖子",
+        "Neck_1": "脖子",
+        "BraceletRight": "右手腕",
+        "BraceletLeft": "左手腕",
+        "HandRight": "右手",
+        "HandLeft": "左手"
+    }
+}

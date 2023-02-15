@@ -1,0 +1,8 @@
+{
+    "ListenOnPortNumber": 4444,
+    "Firebase": {
+        "ProjectID": "myprojectID",
+        "CredentialFile": "myfirestoreCredentialFile"
+    },
+    "MaxLength": 38
+}

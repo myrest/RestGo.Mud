@@ -1,0 +1,33 @@
+{
+    "WeaponCategory": {
+        "Type": {
+            "Name": "Dagger",
+            "Description": "dagger, short sword",
+            "Weapons": {
+                "Position": "Hand",
+                "Damage": 10,
+                "DamageRange": 5,
+                "DamagePrecision": 2,
+                "ExtraAttribute": {
+                    "Strength": 0,
+                    "Wisdom": 0,
+                    "Intelligent": 0,
+                    "Constitution": 0,
+                    "Dexterity": 0
+                },
+                "DestroyWhenZeroQuota": false,
+                "AllowExecuteTimes": 0,
+                "Name": "Glass",
+                "SystemCode": "SecreGlass",
+                "ShortName": "Shattered glass",
+                "Description": "Sharp",
+                "DescriptionDetail": "It seems to be a certain artifact, the shattered glass that was shattered after enduring a huge force, shining charmingly in the sun.",
+                "Weight": 1,
+                "Pricing": -1,
+                "Decoration": [
+                    "shiny"
+                ]
+            }
+        }
+    }
+}
