@@ -6,6 +6,7 @@ import (
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Command/CommonServices/StructCollection"
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/BasicDefinition"
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/ExitsPosition"
+	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/ObjectsImplementation/Container"
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/Room"
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/Room/RoomHelper"
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core/Creature"
@@ -40,7 +41,7 @@ func InitialUser() Player.User {
 			Race:             Creature.Human,
 			RoomID:           1,
 			Level:            1,
-			ContainerPure: BasicDefinition.ContainerPure{
+			ContainerPure: Container.ContainerPure{
 				Items: []BasicDefinition.IObjectBasic{},
 			},
 		},
@@ -53,8 +54,8 @@ func InitialUser() Player.User {
 	return rtn
 }
 
-func PutInContainer(objID string, container *BasicDefinition.ContainerPure) {
-	bag := &BasicDefinition.ContainerBasic{
+func PutInContainer(objID string, container *Container.ContainerPure) {
+	bag := &Container.ContainerObject{
 		ObjectBasic: BasicDefinition.ObjectBasic{
 			ID:                 objID,
 			Name_EN:            "Bag",
@@ -64,15 +65,16 @@ func PutInContainer(objID string, container *BasicDefinition.ContainerPure) {
 			Description_Look:   "一個好用、簡便可以放物品的背包。",
 			Weight:             10,
 			Pricing:            100,
+			Capability:         []BasicDefinition.BasicCapability{BasicDefinition.CanBeMove},
 		},
-		ContainerPure: BasicDefinition.ContainerPure{
+		ContainerPure: Container.ContainerPure{
 			Items: []BasicDefinition.IObjectBasic{},
 		},
 	}
 	container.PutIn(bag)
 }
 
-func PutInKnife(objID string, container *BasicDefinition.ContainerPure) {
+func PutInKnife(objID string, container *Container.ContainerPure) {
 	object := &BasicDefinition.ObjectBasic{
 		ID:                 objID,
 		Name_EN:            "Knife",
@@ -82,11 +84,41 @@ func PutInKnife(objID string, container *BasicDefinition.ContainerPure) {
 		Description_Look:   "一把沒什麼用的小刀，看來不怎麼樣。",
 		Weight:             10,
 		Pricing:            100,
+		Capability:         []BasicDefinition.BasicCapability{BasicDefinition.CanBeMove},
 	}
 	container.PutIn(object)
 }
 
-func PutInGlassess(objID string, container *BasicDefinition.ContainerPure) {
+func PutInHelmet(objID string, container *Container.ContainerPure) {
+	object := &BasicDefinition.ObjectBasic{
+		ID:                 objID,
+		Name_EN:            "Helmet",
+		Name_CH:            "破掉的安全帽",
+		Level:              1,
+		Description_Ground: "這是一頂破掉被丟棄的安全帽",
+		Description_Look:   "破掉的安全帽，有總比沒有的好",
+		Weight:             10,
+		Pricing:            100,
+		Capability:         []BasicDefinition.BasicCapability{BasicDefinition.CanBeMove},
+	}
+	container.PutIn(object)
+}
+
+func PutInMontain(objID string, container *Container.ContainerPure) {
+	object := &BasicDefinition.ObjectBasic{
+		ID:                 objID,
+		Name_EN:            "Montain",
+		Name_CH:            "一座高山",
+		Level:              1,
+		Description_Ground: "這是一座很高的高山",
+		Description_Look:   "高山，只能遠觀啊～～",
+		Weight:             10,
+		Pricing:            100,
+	}
+	container.PutIn(object)
+}
+
+func PutInGlassess(objID string, container *Container.ContainerPure) {
 	object := &BasicDefinition.ObjectBasic{
 		ID:                 objID,
 		Name_EN:            "Glasse",
@@ -102,7 +134,7 @@ func PutInGlassess(objID string, container *BasicDefinition.ContainerPure) {
 
 func InitialRoom() *Room.Room {
 	rtn := &Room.Room{
-		ContainerPure: BasicDefinition.ContainerPure{
+		ContainerPure: Container.ContainerPure{
 			Items: []BasicDefinition.IObjectBasic{},
 		},
 		Title:       "測試房間001",

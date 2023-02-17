@@ -1,8 +1,8 @@
 {
     "ListenOnPortNumber": 4444,
     "Firebase": {
-        "ProjectID": "myprojectID",
-        "CredentialFile": "myfirestoreCredentialFile"
+        "ProjectID": "gomud-cfd75",
+        "CredentialFile": "gomud-cfd75-f333d9c85c96.json"
     },
     "MaxLength": 38
 }

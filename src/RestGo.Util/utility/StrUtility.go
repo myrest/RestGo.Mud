@@ -1,7 +1,6 @@
 package utility
 
 import (
-	"fmt"
 	"strings"
 	"unicode/utf8"
 )
@@ -37,6 +36,7 @@ func (s *RestString) String() string {
 	return string(*s)
 }
 
+// 每多少字換行
 func InsertNewLine(s string, args ...int) string {
 	maxLen := 25
 	if len(args) > 0 {
@@ -78,24 +78,4 @@ func InsertNewLine(s string, args ...int) string {
 		i += size - 1
 	}
 	return result
-}
-
-func AlignMessageByBrackets(msgArray []string) string {
-	var maxLen int
-	var formatedArr []string
-	for _, str := range msgArray {
-		i := strings.Index(str, "(")
-		if i > 0 {
-			if i > maxLen {
-				maxLen = i
-			}
-		}
-	}
-	for _, str := range msgArray {
-		i := strings.Index(str, "(")
-		if i > 0 {
-			formatedArr = append(formatedArr, fmt.Sprintf("%-*s (%s)\n", maxLen, str[:i], str[i+1:]))
-		}
-	}
-	return strings.Join(formatedArr, "\n")
 }

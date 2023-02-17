@@ -2,12 +2,12 @@ package Room
 
 import (
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Command/CommonServices/StructCollection"
-	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/BasicDefinition"
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/ExitsPosition"
+	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/ObjectsImplementation/Container"
 )
 
 type Room struct {
-	BasicDefinition.ContainerPure
+	Container.ContainerPure
 	Title       string
 	Ceiling     CoverType
 	Description string

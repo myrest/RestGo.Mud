@@ -16,23 +16,20 @@ func (c *TestCommand) Settings() (Fullkey string, SupportFuzzyMatch bool) {
 
 func (c *TestCommand) Execute(args string, mudconn *StructCollection.MudClient) (quit bool) {
 	//測試物件
-	bag := &Container.Bag{
-		ContainerBasic: BasicDefinition.ContainerBasic{
-			ObjectBasic: BasicDefinition.ObjectBasic{
-				ID:                 uu.NewV4().String(),
-				Name_EN:            "Bag",
-				Name_CH:            "背包",
-				Level:              1,
-				Description_Ground: "一個放物品的背包",
-				Description_Look:   "這是一個可以放物品的背包",
-				Weight:             10,
-				Pricing:            100,
-			},
-			ContainerPure: BasicDefinition.ContainerPure{
-				Items: []BasicDefinition.IObjectBasic{},
-			},
+	bag := &Container.ContainerObject{
+		ObjectBasic: BasicDefinition.ObjectBasic{
+			ID:                 uu.NewV4().String(),
+			Name_EN:            "Bag",
+			Name_CH:            "背包",
+			Level:              1,
+			Description_Ground: "一個放物品的背包",
+			Description_Look:   "這是一個可以放物品的背包",
+			Weight:             10,
+			Pricing:            100,
+			Capability:         []BasicDefinition.BasicCapability{},
 		},
 	}
+
 	mudconn.User.PutIn(bag)
 	mudconn.SendFMessage("你憑空造出了一個%s。", bag.Name_CH)
 	return

@@ -141,13 +141,17 @@ func ConvertStructToMap(i interface{}) (map[string]interface{}, error) {
 }
 
 func ParserGetPutCommand(msg string) (objectNum int, objectName string, containNum int, containerName string) {
-	parts := strings.Fields(msg)
-	if len(parts) < 2 {
+	if msg == "" {
 		return
 	}
 
+	parts := strings.Fields(msg)
+	if len(parts) < 2 {
+		parts = append(parts, "")
+	}
+
 	objectNum, objectName = ParserObjectNumber(parts[0])
-	if len(parts) < 3 || (parts[1] != "into" && parts[1] != "in") {
+	if len(parts) < 3 || (parts[1] != "into" && parts[1] != "in" && parts[1] != "from") {
 		containNum, containerName = ParserObjectNumber(parts[1])
 		return
 	}
@@ -157,16 +161,17 @@ func ParserGetPutCommand(msg string) (objectNum int, objectName string, containN
 }
 
 func ParserObjectNumber(str string) (num int, name string) {
+	num = 1
 	obj := strings.Split(str, ".")
 	if len(obj) == 2 {
 		var err error
 		num, err = strconv.Atoi(obj[0])
 		if err != nil {
-			return
+			name = str
+		} else {
+			name = obj[1]
 		}
-		name = obj[1]
 	} else {
-		num = 1
 		name = str
 	}
 	return

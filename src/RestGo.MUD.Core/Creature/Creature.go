@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/BasicDefinition"
+	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/ObjectsImplementation/Container"
 )
 
 type Creature struct {
@@ -18,7 +18,7 @@ type Creature struct {
 	Race             CreatureRace
 	RoomID           int
 	Level            int
-	BasicDefinition.ContainerPure
+	Container.ContainerPure
 }
 
 type UserAttributes struct {
