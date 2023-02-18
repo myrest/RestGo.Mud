@@ -63,14 +63,14 @@ func (j *roomJson) ToRoom(World string, Region string, Area string, DefaultCeili
 
 func (rs *roomsJson) ToRoomCache(World string, Region string, Area string) error {
 	for _, room := range rs.Rooms {
-		if err := putIntoCache(room.ToRoom(World, Region, Area, rs.DefaultCeiling)); err != nil {
+		if err := AddRoom(room.ToRoom(World, Region, Area, rs.DefaultCeiling)); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-func loadRoomsFromFolder() error {
+func LoadRoomsFromFolder(DocumentRoomRoot string) error {
 	err := filepath.Walk(DocumentRoomRoot, loadRoomsFromFileWithCheck)
 	if err != nil {
 		fmt.Printf("Error walking the path %q: %v\n", DocumentRoomRoot, err)
@@ -102,7 +102,7 @@ func loadRoomsFromFileWithCheck(path string, f os.FileInfo, err error) error {
 	return nil
 }
 
-func putIntoCache(room *R.Room) error {
+func AddRoom(room *R.Room) error {
 	if _, ok := Rooms[room.Geography.RoomID]; ok {
 		return fmt.Errorf("房間重覆定義[%d]", room.Geography.RoomID)
 	} else {

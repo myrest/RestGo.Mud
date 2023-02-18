@@ -13,7 +13,8 @@ const (
 type ObjectType int
 
 const (
-	Container ObjectType = iota
+	Basic ObjectType = iota
+	Container
 	Fixed
 )
 

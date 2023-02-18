@@ -5,6 +5,8 @@ import (
 
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Command/Command/UserCommands"
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Command/CommonServices/StructCollection"
+	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/BasicDefinition"
+	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/ObjectsImplementation/Container"
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/Room/RoomHelper"
 	"rest.com.tw/tinymud/src/RestGo.Util/utility"
 )
@@ -40,7 +42,13 @@ func (c *LookCommand) Execute(args string, mudconn *StructCollection.MudClient) 
 		//先查環境地上有沒有該物品
 		obj, err := r.GetObjPoniter(num, objName)
 		if err == nil {
-			//要判斷是不是可以裝水的容器
+			if obj.GetObjectBasic().ObjectType == BasicDefinition.Container {
+				container := obj.(*Container.ContainerObject)
+				msg := "你看到裏面有：\n"
+				msg = msg + container.ItemListForDisplay()
+				mudconn.SendMessage(msg)
+				return
+			}
 			mudconn.SendMessage(obj.GetObjectBasic().Name_CH, "需要判斷是不是可以裝水的容器。")
 			return
 		}

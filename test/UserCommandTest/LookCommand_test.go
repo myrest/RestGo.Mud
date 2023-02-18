@@ -16,10 +16,9 @@ func TestLookCommand_Execute(t *testing.T) {
 	// 建立一個模擬的MudClient物件
 	user := InitialUser()
 	room := InitialRoom()
-	PutInKnife("KnifeGUID-123456", &user.ContainerPure)
-	PutInHelmet("HelmetGUID-123456", &room.ContainerPure)
-	PutInContainer("BagGUID-123456", &room.ContainerPure)
-	PutInGlassess("GlassGUID-123456", &room.ContainerPure)
+	PutInKnife(&user.ContainerPure)
+	PutInHelmet(&room.ContainerPure)
+	PutInBag(&room.ContainerPure)
 	mudconn := &StructCollection.MudClient{
 		Conn:         nil,
 		ConnectionID: "123456",
@@ -32,10 +31,9 @@ func TestLookCommand_Execute(t *testing.T) {
 		expectedMessage string
 	}{
 		{"xxx", "你找不到那樣物品。"},
-		{"g", "一片閃閃發亮的碎玻璃掉在地上。"},
 		{"k", "一把沒什麼用的小刀，看來不怎麼樣。"},
 		{"b", "一個被人放在地上的背包。"},
-		{"", "測試房間001\n明顯的出口有：\n這是測試房間001Description\n破掉的安全帽 (Helmet)\n背包     (Bag)\n碎玻璃    (Glasse)"},
+		{"", "測試房間001\n明顯的出口有：\n這是測試房間001Description\n破掉的安全帽  (Helmet)\n堪堪能用的背包 (Bag)"},
 	}
 	Command := &PPLCommand.LookCommand{}
 	for _, tc := range testCases {
@@ -53,7 +51,7 @@ func TestLookIntoObjCommand_Execute(t *testing.T) {
 	// 建立一個模擬的MudClient物件
 	user := InitialUser()
 	room := InitialRoom()
-	PutInContainer("BagGUID-123456", &room.ContainerPure)
+	PutInBag(&room.ContainerPure)
 	mudconn := &StructCollection.MudClient{
 		Conn:         nil,
 		ConnectionID: "123456",
@@ -67,7 +65,7 @@ func TestLookIntoObjCommand_Execute(t *testing.T) {
 		{"in", "你找不到那樣物品。"},
 		{"into", "你找不到那樣物品。"},
 		{"in xxx", "你找不到那樣物品。"},
-		{"in b", "背包 需要判斷是不是可以裝水的容器。"},
+		{"in b", "你看到裏面有："},
 	}
 	Command := &PPLCommand.LookCommand{}
 	for _, tc := range testCases {
@@ -85,9 +83,9 @@ func TestLookMultipleObjCommand_Execute(t *testing.T) {
 	// 建立一個模擬的MudClient物件
 	user := InitialUser()
 	room := InitialRoom()
-	PutInGlassess("GlassGUID-123456", &room.ContainerPure)
-	PutInGlassess("GlassGUID-23456", &room.ContainerPure)
-	PutInContainer("BagGUID-123456", &room.ContainerPure)
+	PutInGlassess(&room.ContainerPure)
+	PutInGlassess(&room.ContainerPure)
+	PutInBag(&room.ContainerPure)
 	mudconn := &StructCollection.MudClient{
 		Conn:         nil,
 		ConnectionID: "123456",
@@ -99,7 +97,7 @@ func TestLookMultipleObjCommand_Execute(t *testing.T) {
 		msg             string
 		expectedMessage string
 	}{
-		{"", "測試房間001\n明顯的出口有：\n這是測試房間001Description\n(2)碎玻璃 (Glasse)\n    背包  (Bag)"},
+		{"", "測試房間001\n明顯的出口有：\n這是測試房間001Description\n(2)尖銳的碎玻璃  (Glasse)\n    堪堪能用的背包 (Bag)"},
 	}
 	Command := &PPLCommand.LookCommand{}
 	for _, tc := range testCases {

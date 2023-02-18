@@ -1,6 +1,6 @@
 package BasicDefinition
 
 type IObjectBasic interface {
-	GetObjectBasic() ObjectBasic
+	GetObjectBasic() *ObjectBasic
 	HaveCapability(cab BasicCapability) bool
 }

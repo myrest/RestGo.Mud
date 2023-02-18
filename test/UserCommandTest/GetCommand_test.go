@@ -28,12 +28,12 @@ func TestGetCommand_Execute(t *testing.T) {
 	//建立一個房間
 	room := InitialRoom()
 	//設定房間內物品，一個背包，一把小刀，一座高山
-	PutInContainer("BagGroundGUID-123456", &room.ContainerPure)
-	PutInKnife("KnifeGroundGUID-123456", &room.ContainerPure)
-	PutInMontain("MontainGUID-123456", &room.ContainerPure)
+	PutInBag(&room.ContainerPure)
+	PutInKnife(&room.ContainerPure)
+	PutInMontain(&room.ContainerPure)
 	//背包裏放碎玻璃
 	container := room.Items[0].(*Container.ContainerObject)
-	PutInGlassess("GlassessinBagGUID-123456", &container.ContainerPure)
+	PutInGlassess(&container.ContainerPure)
 
 	//設定情境，地上沒有物品時
 	testCases := []struct {

@@ -2,7 +2,9 @@ package Container
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
+	"unicode/utf8"
 
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/BasicDefinition"
 )
@@ -59,4 +61,57 @@ func (c *ContainerPure) GetObjPoniter(num int, name string) (obj BasicDefinition
 		err = fmt.Errorf("object not found")
 	}
 	return
+}
+
+type alignSymbol struct {
+	Num              int
+	Description_List string
+	Name_EN          string
+}
+
+func (c *ContainerPure) ItemListForDisplay() string {
+	var msgarr []string                          //放格式化好的陣列
+	var maxNum = 1                               //重疊最大數字
+	var maxLength int                            //物件名稱最長字數
+	var mapItems = make(map[string]*alignSymbol) //統計資料用
+	for _, item := range c.Items {
+		obj := item.GetObjectBasic()
+		mapKey := obj.Name_EN + obj.Name_CH
+		if value, ok := mapItems[mapKey]; ok {
+			value.Num++
+			if value.Num > maxNum {
+				maxNum = value.Num
+			}
+		} else {
+			mapItems[mapKey] = &alignSymbol{
+				Num:              1,
+				Description_List: obj.Description_List,
+				Name_EN:          obj.Name_EN,
+			}
+		}
+		objNameLength := utf8.RuneCountInString(obj.Description_List)
+		if objNameLength > maxLength {
+			maxLength = objNameLength
+		}
+	}
+
+	maxNumLength := len(strconv.Itoa(maxNum))
+	for _, item := range mapItems {
+		var lineItem string
+		if maxNum > 1 {
+			itemNumLength := len(strconv.Itoa(item.Num))
+			//要加數量
+			if item.Num > 1 {
+				//在左邊加空白
+				lineItem = fmt.Sprintf("%s(%d)", strings.Repeat(" ", maxNumLength-itemNumLength), item.Num)
+			} else {
+				lineItem = strings.Repeat(" ", maxNum+2)
+			}
+		}
+		lineItem += item.Description_List + strings.Repeat(" ", maxLength-utf8.RuneCountInString(item.Description_List))
+		lineItem += fmt.Sprintf(" (%s)", item.Name_EN)
+		msgarr = append(msgarr, lineItem)
+	}
+
+	return strings.Join(msgarr, "\n")
 }

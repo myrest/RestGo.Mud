@@ -19,8 +19,8 @@ func TestPutCommandUserToSelf_Execute(t *testing.T) {
 	Begin()
 	// 建立一個模擬的MudClient物件
 	user := InitialUser()
-	PutInContainer("BagGUID-123456", &user.ContainerPure)
-	PutInKnife("KnifeGUID-123456", &user.ContainerPure)
+	PutInBag(&user.ContainerPure)
+	PutInKnife(&user.ContainerPure)
 	mudconn := &StructCollection.MudClient{
 		Conn:         nil,
 		ConnectionID: "123456",
@@ -38,7 +38,7 @@ func TestPutCommandUserToSelf_Execute(t *testing.T) {
 		{"xxx into knife", "你無法將東西放入小刀裏。"},
 		{"xxx bag", "你身上沒有那個東西。"},
 		{"b b", "你試著看看能不能把你自己給裝進自己？"},
-		{"k b", "你把小刀放入背包。"},
+		{"k b", "你把小刀放入袋子。"},
 	}
 	Command := &PPLCommand.PutCommand{}
 	for _, tc := range testCases {
@@ -56,8 +56,8 @@ func TestPutCommandUserToSelfCheckNum_Execute(t *testing.T) {
 	Begin()
 	// 建立一個模擬的MudClient物件
 	user := InitialUser()
-	PutInContainer("BagGUID-123456", &user.ContainerPure)
-	PutInKnife("KnifeGUID-123456", &user.ContainerPure)
+	PutInBag(&user.ContainerPure)
+	PutInKnife(&user.ContainerPure)
 	mudconn := &StructCollection.MudClient{
 		Conn:         nil,
 		ConnectionID: "123456",
@@ -100,13 +100,13 @@ func TestPutFromUserToObjectInTheGround(t *testing.T) {
 		User:         user,
 	}
 	// 設定使用者身上物品，身上有兩把Knife
-	PutInKnife("KnifeGUID-123456", &mudconn.User.ContainerPure)
-	PutInKnife("KnifeGUID-23456", &mudconn.User.ContainerPure)
+	PutInKnife(&mudconn.User.ContainerPure)
+	PutInKnife(&mudconn.User.ContainerPure)
 
 	//建立一個房間
 	room := InitialRoom()
 	//設定房間內物品
-	PutInContainer("BagGroundGUID-123456", &room.ContainerPure) //在地上放一個背包
+	PutInBag(&room.ContainerPure) //在地上放一個背包
 
 	//設定情境，將身上物品放入地上背包
 	testCases := []struct {

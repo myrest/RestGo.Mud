@@ -10,9 +10,3 @@ type serviceConfig struct {
 	} `json:"Firebase"`
 	MaxLength int `json:"MaxLength"`
 }
-
-func init() {
-	if err := convertFromFile("ServerConfig.json", &ServiceConfig); err != nil {
-		panic(err)
-	}
-}

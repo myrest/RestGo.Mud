@@ -3,6 +3,7 @@ package UserCommandTest
 import (
 	"fmt"
 
+	uuid "github.com/satori/go.uuid"
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Command/CommonServices/StructCollection"
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/BasicDefinition"
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/ExitsPosition"
@@ -31,7 +32,7 @@ func Begin() {
 func InitialUser() Player.User {
 	rtn := Player.User{
 		Creature: Creature.Creature{
-			ID:               "TestUser001",
+			ID:               uuid.NewV4().String(),
 			Name:             "TestUser001_Name",
 			Description:      "這個是一個用來測試的Lv1帳號",
 			Title:            "測試Lv1專用",
@@ -54,18 +55,23 @@ func InitialUser() Player.User {
 	return rtn
 }
 
-func PutInContainer(objID string, container *Container.ContainerPure) {
+func PutInBag(container *Container.ContainerPure) {
 	bag := &Container.ContainerObject{
 		ObjectBasic: BasicDefinition.ObjectBasic{
-			ID:                 objID,
-			Name_EN:            "Bag",
-			Name_CH:            "背包",
-			Level:              1,
-			Description_Ground: "一個被人放在地上的背包。",
-			Description_Look:   "一個好用、簡便可以放物品的背包。",
-			Weight:             10,
-			Pricing:            100,
-			Capability:         []BasicDefinition.BasicCapability{BasicDefinition.CanBeMove},
+			ID:                   uuid.NewV4().String(),
+			Name_EN:              "Bag",
+			Name_CH:              "背包",
+			Level:                1,
+			Description_List:     "堪堪能用的背包",
+			Description_Ground:   "一個被人放在地上的背包。",
+			Description_Look:     "一個好用、簡便可以放物品的背包。",
+			Weight:               10,
+			Pricing:              100,
+			Capability:           []BasicDefinition.BasicCapability{BasicDefinition.CanBeMove},
+			ObjectType:           1,
+			DestroyWhenZeroQuota: false,
+			AllowExecuteTimes:    0,
+			Decoration:           []string{},
 		},
 		ContainerPure: Container.ContainerPure{
 			Items: []BasicDefinition.IObjectBasic{},
@@ -74,12 +80,13 @@ func PutInContainer(objID string, container *Container.ContainerPure) {
 	container.PutIn(bag)
 }
 
-func PutInKnife(objID string, container *Container.ContainerPure) {
+func PutInKnife(container *Container.ContainerPure) {
 	object := &BasicDefinition.ObjectBasic{
-		ID:                 objID,
+		ID:                 uuid.NewV4().String(),
 		Name_EN:            "Knife",
 		Name_CH:            "小刀",
 		Level:              1,
+		Description_List:   "鈍掉的小刀",
 		Description_Ground: "這是一把放在地上的小刀",
 		Description_Look:   "一把沒什麼用的小刀，看來不怎麼樣。",
 		Weight:             10,
@@ -89,12 +96,13 @@ func PutInKnife(objID string, container *Container.ContainerPure) {
 	container.PutIn(object)
 }
 
-func PutInHelmet(objID string, container *Container.ContainerPure) {
+func PutInHelmet(container *Container.ContainerPure) {
 	object := &BasicDefinition.ObjectBasic{
-		ID:                 objID,
+		ID:                 uuid.NewV4().String(),
 		Name_EN:            "Helmet",
-		Name_CH:            "破掉的安全帽",
+		Name_CH:            "安全帽",
 		Level:              1,
+		Description_List:   "破掉的安全帽",
 		Description_Ground: "這是一頂破掉被丟棄的安全帽",
 		Description_Look:   "破掉的安全帽，有總比沒有的好",
 		Weight:             10,
@@ -104,9 +112,9 @@ func PutInHelmet(objID string, container *Container.ContainerPure) {
 	container.PutIn(object)
 }
 
-func PutInMontain(objID string, container *Container.ContainerPure) {
+func PutInMontain(container *Container.ContainerPure) {
 	object := &BasicDefinition.ObjectBasic{
-		ID:                 objID,
+		ID:                 uuid.NewV4().String(),
 		Name_EN:            "Montain",
 		Name_CH:            "一座高山",
 		Level:              1,
@@ -118,12 +126,13 @@ func PutInMontain(objID string, container *Container.ContainerPure) {
 	container.PutIn(object)
 }
 
-func PutInGlassess(objID string, container *Container.ContainerPure) {
+func PutInGlassess(container *Container.ContainerPure) {
 	object := &BasicDefinition.ObjectBasic{
-		ID:                 objID,
+		ID:                 uuid.NewV4().String(),
 		Name_EN:            "Glasse",
 		Name_CH:            "碎玻璃",
 		Level:              1,
+		Description_List:   "尖銳的碎玻璃",
 		Description_Ground: "一片閃閃發亮的碎玻璃掉在地上。",
 		Description_Look:   "閃閃發亮的碎玻璃，看起來真是耀眼。",
 		Weight:             10,
@@ -148,6 +157,6 @@ func InitialRoom() *Room.Room {
 		},
 		Exits: map[ExitsPosition.ExitName]ExitsPosition.Exit{},
 	}
-	RoomHelper.Rooms[rtn.Geography.RoomID] = rtn
+	RoomHelper.AddRoom(rtn)
 	return rtn
 }

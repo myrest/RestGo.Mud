@@ -7,14 +7,13 @@ import (
 	"strconv"
 	"syscall"
 
+	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/ObjectsImplementation/ObjectHelper"
+	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/Room/RoomHelper"
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core/Config"
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core/Telnet"
 
 	//註冊命令用
 	_ "rest.com.tw/tinymud/src/RestGo.MUD.Core.Command/Command/UserCommands/PPLCommand"
-
-	//初始化物件
-	_ "rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/Room/RoomHelper"
 )
 
 func main() {
@@ -38,4 +37,23 @@ func main() {
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
 	<-sig
 	server.Shutdown()
+}
+
+func LoadWorld() {
+	var err error
+
+	const DocumentRoomRoot = "Documents/Objects/Rooms"
+	if err = RoomHelper.LoadRoomsFromFolder(DocumentRoomRoot); err != nil {
+		fmt.Println(err.Error())
+	}
+
+	const DocumentObjectRoot = "Documents/Objects/Objects"
+	if err = ObjectHelper.LoadObjectFromFolder(DocumentObjectRoot); err != nil {
+		fmt.Println(err.Error())
+	}
+
+	if err := Config.ConvertFromFile("ServerConfig.json", &Config.ServiceConfig); err != nil {
+		panic(err)
+	}
+
 }

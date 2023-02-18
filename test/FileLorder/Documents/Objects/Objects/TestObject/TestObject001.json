@@ -1,0 +1,28 @@
+[
+    {
+        "Object_Code": "Helmet-001",
+        "Name_EN": "Helmet",
+        "Name_CH": "安全帽",
+        "Level": 1,
+        "Description_List": "破掉的安全帽",
+        "Description_Ground": "這是一頂破掉被丟棄的安全帽",
+        "Description_Look": "破掉的安全帽，有總比沒有的好",
+        "ObjectType": 0,
+        "Capability": [
+            0
+        ]
+    },
+    {
+        "Object_Code": "Bag-001",
+        "Name_EN": "Bag",
+        "Name_CH": "袋子",
+        "Level": 1,
+        "Description_List": "堪堪能用的背包",
+        "Description_Ground": "可以用來裝些小物品的袋子",
+        "Description_Look": "看起來破舊不堪，不太耐用的袋子。",
+        "ObjectType": 0,
+        "Capability": [
+            0
+        ]
+    }
+]
