@@ -1,0 +1,20 @@
+{
+    "DefaultCeiling": "dark",
+    "Rooms": [
+        {
+            "Title": "walking training 1",
+            "Description": "\u3000\u3000 one two three four five six seven eight ninety (\u001B[34m English 1 character \u001B[0m)",
+            "Ceiling": "dark",
+            "RoomID": 1,
+            "Exits": {
+                "South": {
+                    "RoomID": 2,
+                    "AcceptVerbs": "none",
+                    "Dimension": "south",
+                    "gateStatus": "open",
+                    "KeyNumber": 0
+                }
+            }
+        }
+    ]
+}
