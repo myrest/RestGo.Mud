@@ -5,5 +5,3 @@ import (
 )
 
 var Rooms = make(map[int]*Room.Room)
-
-const DocumentRoomRoot = "Documents/Objects/Rooms"

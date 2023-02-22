@@ -80,6 +80,30 @@ func PutInBag(container *Container.ContainerPure) {
 	container.PutIn(bag)
 }
 
+func PutInSafeBox(container *Container.ContainerPure) {
+	bag := &Container.ContainerObject{
+		ObjectBasic: BasicDefinition.ObjectBasic{
+			ID:                   uuid.NewV4().String(),
+			Name_EN:              "SafeBox",
+			Name_CH:              "金庫",
+			Level:                1,
+			Description_List:     "沈重的金庫",
+			Description_Ground:   "一個用來放物品的櫃子。",
+			Description_Look:     "這個櫃子，重到搬不動。",
+			Weight:               10,
+			Pricing:              100,
+			ObjectType:           1,
+			DestroyWhenZeroQuota: false,
+			AllowExecuteTimes:    0,
+			Decoration:           []string{},
+		},
+		ContainerPure: Container.ContainerPure{
+			Items: []BasicDefinition.IObjectBasic{},
+		},
+	}
+	container.PutIn(bag)
+}
+
 func PutInKnife(container *Container.ContainerPure) {
 	object := &BasicDefinition.ObjectBasic{
 		ID:                 uuid.NewV4().String(),
@@ -137,6 +161,7 @@ func PutInGlassess(container *Container.ContainerPure) {
 		Description_Look:   "閃閃發亮的碎玻璃，看起來真是耀眼。",
 		Weight:             10,
 		Pricing:            100,
+		Capability:         []BasicDefinition.BasicCapability{BasicDefinition.CanBeMove},
 	}
 	container.PutIn(object)
 }

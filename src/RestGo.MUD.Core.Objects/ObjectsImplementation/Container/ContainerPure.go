@@ -6,6 +6,8 @@ import (
 	"strings"
 	"unicode/utf8"
 
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"rest.com.tw/tinymud/src/RestGo.MUD.Core.Objects/BasicDefinition"
 )
 
@@ -18,7 +20,8 @@ func (c *ContainerPure) GetOut(num int, name string) (obj BasicDefinition.IObjec
 	//先確認物件是否存在
 	index := -1
 	for key, value := range c.Items {
-		if strings.HasPrefix(strings.ToLower(value.GetObjectBasic().Name_EN), name) {
+		actionObject := value.GetObjectBasic()
+		if strings.HasPrefix(strings.ToLower(actionObject.Name_EN), strings.ToLower(name)) {
 			if num <= 1 {
 				obj = value
 				index = key
@@ -29,9 +32,13 @@ func (c *ContainerPure) GetOut(num int, name string) (obj BasicDefinition.IObjec
 		}
 	}
 	if index > -1 {
-		c.remove(index)
+		if !c.Items[index].HaveCapability(BasicDefinition.CanBeMove) {
+			err = status.Error(BasicDefinition.ObjectCannotMove, "object can't be moved")
+		} else {
+			c.remove(index)
+		}
 	} else {
-		err = fmt.Errorf("object not found")
+		err = status.Error(codes.NotFound, "object not found")
 	}
 	return
 }

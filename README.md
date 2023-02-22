@@ -42,7 +42,7 @@ git clone https://github.com/myrest/RestGo.Mud.git
 ##### Word document
 Folder structure
 /Documents/Object
-/Documents/Object/Rooms/[World]/[Region]/[Area]/[ROOMS].json
+/Documents/Rooms/[World]/[Region]/[Area]/[ROOMS].json
 
 
 Then, navigate into the RestGo.Mud directory and run the following command:

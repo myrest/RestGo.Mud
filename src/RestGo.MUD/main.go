@@ -17,6 +17,7 @@ import (
 )
 
 func main() {
+	LoadWorld()
 	port, _ := strconv.Atoi(os.Getenv("MUDPORT"))
 	if port < 1 {
 		port = Config.ServiceConfig.ListenOnPortNumber
@@ -41,19 +42,18 @@ func main() {
 
 func LoadWorld() {
 	var err error
+	if err := Config.ConvertFromFile("ServerConfig.json", &Config.ServiceConfig); err != nil {
+		panic(err)
+	}
 
-	const DocumentRoomRoot = "Documents/Objects/Rooms"
+	const DocumentRoomRoot = "Documents/Rooms"
 	if err = RoomHelper.LoadRoomsFromFolder(DocumentRoomRoot); err != nil {
 		fmt.Println(err.Error())
 	}
 
-	const DocumentObjectRoot = "Documents/Objects/Objects"
+	const DocumentObjectRoot = "Documents/Objects"
 	if err = ObjectHelper.LoadObjectFromFolder(DocumentObjectRoot); err != nil {
 		fmt.Println(err.Error())
-	}
-
-	if err := Config.ConvertFromFile("ServerConfig.json", &Config.ServiceConfig); err != nil {
-		panic(err)
 	}
 
 }

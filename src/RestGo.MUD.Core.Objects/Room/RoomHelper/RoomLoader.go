@@ -70,7 +70,10 @@ func (rs *roomsJson) ToRoomCache(World string, Region string, Area string) error
 	return nil
 }
 
+var documentRoomRoot string
+
 func LoadRoomsFromFolder(DocumentRoomRoot string) error {
+	documentRoomRoot = DocumentRoomRoot
 	err := filepath.Walk(DocumentRoomRoot, loadRoomsFromFileWithCheck)
 	if err != nil {
 		fmt.Printf("Error walking the path %q: %v\n", DocumentRoomRoot, err)
@@ -80,7 +83,7 @@ func LoadRoomsFromFolder(DocumentRoomRoot string) error {
 
 func loadRoomsFromFileWithCheck(path string, f os.FileInfo, err error) error {
 	if !f.IsDir() && strings.HasSuffix(path, ".json") {
-		pathInformation := strings.Replace(path, DocumentRoomRoot, "", 1)
+		pathInformation := strings.Replace(path, documentRoomRoot, "", 1)
 		// 將路徑分割成三個部分，分別代表 World、Region、Area
 		parts := strings.Split(pathInformation, string(os.PathSeparator))
 		//只處理第三層檔案

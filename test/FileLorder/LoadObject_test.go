@@ -7,7 +7,7 @@ import (
 )
 
 func TestObjectLoader(t *testing.T) {
-	const DocumentObjectRoot = "Documents/Objects/Objects"
+	const DocumentObjectRoot = "Documents/Objects"
 	err := ObjectHelper.LoadObjectFromFolder(DocumentObjectRoot)
 	if err != nil {
 		t.Errorf("Load Object failed.")

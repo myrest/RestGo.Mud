@@ -35,6 +35,8 @@ func TestDropCommand_Execute(t *testing.T) {
 		{"", "你想丟掉什麼物品？"},
 		{"xxx", "你沒有那個東西。"},
 		{"b", "你丟掉背包。"},
+		{"all", "你丟掉小刀。"},
+		{"all", "你身上空空如也。"},
 	}
 	Command := &PPLCommand.DropCommand{}
 	for _, tc := range testCases {

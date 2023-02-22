@@ -28,15 +28,15 @@ func (c *PutCommand) Execute(args string, mudconn *StructCollection.MudClient) (
 		return
 	}
 
+	room, _ := RoomHelper.GetRoom(mudconn.User.RoomID) //假設房間一定存在
 	PutToRoom := false
 	//先試著取出身上conatinerObj的Pointer
 	containerObj, err := mudconn.User.ContainerPure.GetObjPoniter(conatinerNum, containerName)
 	if err != nil {
 		//如果身上的取不到，試著取房間內的
-		room, _ := RoomHelper.GetRoom(mudconn.User.RoomID) //假設房間一定存在
 		containerObj, err = room.ContainerPure.GetObjPoniter(conatinerNum, containerName)
 		if err != nil {
-			mudconn.SendMessage(err.Error())
+			mudconn.SendMessage("這裏沒有那個東西。")
 			return
 		}
 		PutToRoom = true
@@ -66,7 +66,7 @@ func (c *PutCommand) Execute(args string, mudconn *StructCollection.MudClient) (
 	if PutToRoom {
 		mudconn.SendFMessage("你把%s放入眼前的%s。", actionObj.GetObjectBasic().Name_CH, containerObj.GetObjectBasic().Name_CH)
 	} else {
-		mudconn.SendFMessage("你把%s放入%s。", actionObj.GetObjectBasic().Name_CH, containerObj.GetObjectBasic().Name_CH)
+		mudconn.SendFMessage("你把%s放入身上的%s。", actionObj.GetObjectBasic().Name_CH, containerObj.GetObjectBasic().Name_CH)
 	}
 
 	return

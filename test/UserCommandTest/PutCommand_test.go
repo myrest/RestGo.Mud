@@ -26,6 +26,8 @@ func TestPutCommandUserToSelf_Execute(t *testing.T) {
 		ConnectionID: "123456",
 		User:         user,
 	}
+	//建立一個房間
+	InitialRoom()
 
 	//設定情境，地上沒有物品時
 	testCases := []struct {
@@ -33,12 +35,13 @@ func TestPutCommandUserToSelf_Execute(t *testing.T) {
 		expectedMessage string
 	}{
 		{"xxxx", "你想放什麼物品進哪個物品？"},
+		{"xxxx yyyy", "這裏沒有那個東西。"},
 		{"xxx knife", "你無法將東西放入小刀裏。"},
 		{"xxx in knife", "你無法將東西放入小刀裏。"},
 		{"xxx into knife", "你無法將東西放入小刀裏。"},
 		{"xxx bag", "你身上沒有那個東西。"},
 		{"b b", "你試著看看能不能把你自己給裝進自己？"},
-		{"k b", "你把小刀放入袋子。"},
+		{"k b", "你把小刀放入身上的背包。"},
 	}
 	Command := &PPLCommand.PutCommand{}
 	for _, tc := range testCases {
@@ -69,7 +72,7 @@ func TestPutCommandUserToSelfCheckNum_Execute(t *testing.T) {
 		msg             string
 		expectedMessage string
 	}{
-		{"k b", "你把小刀放入背包。"},
+		{"k b", "你把小刀放入身上的背包。"},
 	}
 	Command := &PPLCommand.PutCommand{}
 	for _, tc := range testCases {
